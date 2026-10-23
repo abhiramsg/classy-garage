@@ -3,878 +3,147 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Classy Garage - Mobile Tracker</title>
+    <title>Classy Garage - Mobile Tracker FIXED</title>
     <style>
-        :root {
-            --bg-color: #f1f5f9;
-            --card-bg: #ffffff;
-            --text-main: #0f172a;
-            --text-muted: #475569;
-            --border-color: #cbd5e1;
-            --primary: #0284c7;
-            --primary-hover: #0369a1;
-            --success: #16a34a;
-            --danger: #dc2626;
-            --warning: #d97706;
-            --pill-bg: #ffffff;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            padding: 10px;
-            max-width: 600px;
-            margin: 0 auto;
-            font-size: 13.5px;
-            line-height: 1.4;
-        }
-
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: #ffffff;
-            padding: 12px 14px;
-            border-radius: 12px;
-            border: 1px solid var(--border-color);
-            border-left: 5px solid var(--primary);
-            margin-bottom: 10px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.04);
-        }
-
-        h1 {
-            font-size: 17px;
-            font-weight: 800;
-            color: var(--text-main);
-            letter-spacing: -0.3px;
-        }
-
-        .subtitle {
-            font-size: 11px;
-            font-weight: 600;
-            color: var(--text-muted);
-            margin-top: 1px;
-        }
-
-        .card {
-            border-radius: 12px;
-            padding: 14px;
-            margin-bottom: 10px;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
-        }
-
-        #settingsPanel {
-            background: #fefce8;
-            border-left: 5px solid var(--warning);
-        }
-
-        #staffCard {
-            background: #eef2ff;
-            border-left: 5px solid #6366f1;
-        }
-
-        .card-add-job {
-            background: #f0fdf4;
-            border-left: 5px solid var(--success);
-        }
-
-        #activeJobsCard {
-            background: #fff7ed;
-            border-left: 5px solid var(--warning);
-        }
-
-        .card-report {
-            background: #ffffff;
-            border-left: 5px solid #334155;
-        }
-
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-        }
-
-        .card-title {
-            font-size: 14.5px;
-            font-weight: 800;
-            color: var(--text-main);
-        }
-
-        label {
-            display: block;
-            font-weight: 700;
-            margin-bottom: 4px;
-            font-size: 12px;
-            color: var(--text-main);
-        }
-
-        input[type="text"], input[type="number"], select {
-            width: 100%;
-            padding: 10px 12px;
-            border: 1.5px solid var(--border-color);
-            border-radius: 8px;
-            font-size: 13.5px;
-            font-weight: 600;
-            color: var(--text-main);
-            background: #ffffff;
-            margin-bottom: 8px;
-            transition: border-color 0.2s, box-shadow 0.2s;
-        }
-
-        input:focus, select:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
-        }
-
-        .btn {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 10px 14px;
-            border-radius: 8px;
-            font-weight: 700;
-            font-size: 13.5px;
-            cursor: pointer;
-            width: 100%;
-            text-align: center;
-            transition: background 0.2s, transform 0.1s;
-        }
-
-        .btn:hover { background: var(--primary-hover); }
-        .btn:active { transform: scale(0.98); }
-
-        .btn-success { background: var(--success); }
-        .btn-success:hover { background: #15803d; }
-        .btn-danger { background: var(--danger); }
-        .btn-danger:hover { background: #b91c1c; }
-        .btn-secondary { background: #475569; }
-        .btn-secondary:hover { background: #334155; }
-
-        .pill-group {
-            display: flex;
-            gap: 6px;
-            margin-bottom: 8px;
-            flex-wrap: wrap;
-        }
-
-        .pill {
-            flex: 1;
-            min-width: 70px;
-            padding: 8px 4px;
-            border: 1.5px solid var(--border-color);
-            border-radius: 8px;
-            background: var(--pill-bg);
-            text-align: center;
-            font-weight: 700;
-            font-size: 12px;
-            color: var(--text-muted);
-            cursor: pointer;
-            user-select: none;
-            transition: all 0.2s;
-        }
-
-        .pill.active {
-            background: var(--text-main);
-            color: #ffffff;
-            border-color: var(--text-main);
-        }
-
-        .price-btn-group {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 4px;
-            margin-bottom: 8px;
-        }
-
-        .price-preset {
-            padding: 8px 2px;
-            border: 1.5px solid var(--border-color);
-            background: var(--pill-bg);
-            border-radius: 6px;
-            font-weight: 700;
-            font-size: 11.5px;
-            color: var(--text-muted);
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .price-preset.active {
-            background: var(--primary);
-            color: #ffffff;
-            border-color: var(--primary);
-        }
-
-        .job-card {
-            background: #ffffff;
-            border: 1px solid var(--border-color);
-            border-left: 4px solid var(--primary);
-            border-radius: 10px;
-            padding: 12px;
-            margin-bottom: 8px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.03);
-        }
-
-        .timer-display {
-            font-size: 24px;
-            font-weight: 800;
-            font-variant-numeric: tabular-nums;
-            margin: 4px 0;
-        }
-
-        .timer-normal { color: var(--success); }
-        .timer-warning { color: var(--warning); }
-        .timer-overdue { color: var(--danger); }
-
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            background: rgba(15, 23, 42, 0.6);
-            backdrop-filter: blur(2px);
-            z-index: 1000;
-            padding: 8px;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal-content {
-            background: #ffffff;
-            width: 100%;
-            max-width: 480px;
-            max-height: 98vh;
-            margin: 0 auto;
-            border-radius: 12px;
-            padding: 12px 14px;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .qc-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 6px;
-            margin-bottom: 6px;
-        }
-
-        .checkbox-label {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 600;
-            font-size: 11.5px;
-            margin-bottom: 0;
-            background: #f8fafc;
-            padding: 8px 10px;
-            border-radius: 8px;
-            cursor: pointer;
-            border: 1px solid var(--border-color);
-            user-select: none;
-            line-height: 1.2;
-        }
-
-        .checkbox-label input[type="checkbox"] {
-            width: 16px;
-            height: 16px;
-            accent-color: var(--primary);
-            flex-shrink: 0;
-        }
-
-        .output-box {
-            background: #0f172a;
-            color: #f8fafc;
-            padding: 10px;
-            border-radius: 8px;
-            font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
-            font-size: 12px;
-            white-space: pre-wrap;
-            word-break: break-all;
-            margin-bottom: 8px;
-            max-height: 180px;
-            overflow-y: auto;
-        }
-
-        @media (max-width: 480px) {
-            .price-btn-group {
-                grid-template-columns: repeat(4, 1fr);
-            }
-        }
+        :root { --bg-color: #f1f5f9; --card-bg: #ffffff; --text-main: #0f172a; --text-muted: #475569; --border-color: #cbd5e1; --primary: #0284c7; --primary-hover: #0369a1; --success: #16a34a; --danger: #dc2626; --warning: #d97706; --pill-bg: #ffffff; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', system-ui, -apple-system, sans-serif; -webkit-tap-highlight-color: transparent; }
+        body { background-color: var(--bg-color); color: var(--text-main); padding: 10px; max-width: 600px; margin: 0 auto; font-size: 13.5px; line-height: 1.4; }
+        header { display: flex; justify-content: space-between; align-items: center; background: #ffffff; padding: 12px 14px; border-radius: 12px; border: 1px solid var(--border-color); border-left: 5px solid var(--primary); margin-bottom: 10px; }
+        h1 { font-size: 17px; font-weight: 800; } .subtitle { font-size: 11px; font-weight: 600; color: var(--text-muted); }
+        .card { border-radius: 12px; padding: 14px; margin-bottom: 10px; border: 1px solid var(--border-color); }
+        #settingsPanel { background: #fefce8; border-left: 5px solid var(--warning); } #staffCard { background: #eef2ff; border-left: 5px solid #6366f1; }
+        .card-add-job { background: #f0fdf4; border-left: 5px solid var(--success); } #activeJobsCard { background: #fff7ed; border-left: 5px solid var(--warning); } .card-report { background: #ffffff; border-left: 5px solid #334155; }
+        .card-header { display: flex; justify-content: space-between; align-items: center; cursor: pointer; } .card-title { font-size: 14.5px; font-weight: 800; }
+        label { display: block; font-weight: 700; margin-bottom: 4px; font-size: 12px; }
+        input[type="text"], input[type="number"], select { width: 100%; padding: 10px 12px; border: 1.5px solid var(--border-color); border-radius: 8px; font-size: 13.5px; font-weight: 600; margin-bottom: 8px; }
+        .btn { background: var(--primary); color: white; border: none; padding: 10px 14px; border-radius: 8px; font-weight: 700; font-size: 13.5px; cursor: pointer; width: 100%; }
+        .btn-success { background: var(--success); } .btn-danger { background: var(--danger); } .btn-secondary { background: #475569; }
+        .pill-group { display: flex; gap: 6px; margin-bottom: 8px; flex-wrap: wrap; }
+        .pill { flex: 1; min-width: 70px; padding: 8px 4px; border: 1.5px solid var(--border-color); border-radius: 8px; background: #fff; text-align: center; font-weight: 700; font-size: 12px; cursor: pointer; }
+        .pill.active { background: var(--text-main); color: #fff; border-color: var(--text-main); }
+        .price-btn-group { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; margin-bottom: 8px; }
+        .price-preset { padding: 8px 2px; border: 1.5px solid var(--border-color); background: #fff; border-radius: 6px; font-weight: 700; font-size: 11.5px; text-align: center; cursor: pointer; }
+        .price-preset.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+        .job-card { background: #fff; border: 1px solid var(--border-color); border-left: 4px solid var(--primary); border-radius: 10px; padding: 12px; margin-bottom: 8px; }
+        .timer-display { font-size: 24px; font-weight: 800; margin: 4px 0; } .timer-normal { color: var(--success); } .timer-warning { color: var(--warning); } .timer-overdue { color: var(--danger); }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(15, 23, 42, 0.6); z-index: 1000; padding: 8px; align-items: center; justify-content: center; }
+        .modal-content { background: #fff; width: 100%; max-width: 480px; max-height: 98vh; border-radius: 12px; padding: 12px 14px; display: flex; flex-direction: column; justify-content: space-between; }
+        .qc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 6px; }
+        .checkbox-label { display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: 11.5px; background: #f8fafc; padding: 8px 10px; border-radius: 8px; border: 1px solid var(--border-color); }
+        .output-box { background: #0f172a; color: #f8fafc; padding: 10px; border-radius: 8px; font-family: monospace; font-size: 12px; white-space: pre-wrap; margin-bottom: 8px; max-height: 180px; overflow-y: auto; }
     </style>
 </head>
 <body>
-
-    <header>
-        <div>
-            <h1>Classy Garage</h1>
-            <div class="subtitle">Car Wash Tracking Engine</div>
-        </div>
-        <button class="btn btn-secondary" style="width: auto; padding: 5px 10px; font-size: 11.5px;" onclick="toggleSettings()">⚙️ Settings</button>
-    </header>
-
-    <!-- Settings Panel -->
-    <div id="settingsPanel" class="card" style="display: none;">
-        <div class="card-title" style="margin-bottom: 6px;">Google Sheets Webhook Setup</div>
-        <label>Google Apps Script Web App URL:</label>
-        <input type="text" id="sheetWebhookUrl" placeholder="https://script.google.com/macros/s/.../exec">
-        <button class="btn btn-success" style="margin-bottom: 10px;" onclick="saveSettings()">Save Webhook URL</button>
-        
-        <div style="border-top: 1px solid var(--border-color); padding-top: 10px; margin-top: 10px;">
-            <div class="card-title" style="margin-bottom: 4px; color: var(--danger);">Data Management</div>
-            <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 6px;">Clear active logs or reset state.</div>
-            <button class="btn btn-danger" onclick="clearTodayData()">🗑️ Clear Today's Records</button>
-        </div>
-    </div>
-
-    <!-- Staff Setup Card -->
-    <div class="card" id="staffCard">
-        <div class="card-header" onclick="toggleStaffCard()">
-            <div class="card-title">👥 Today's Staff Setup</div>
-            <span id="staffToggleIcon" style="font-weight: 700; font-size: 12px; color: var(--text-muted);">▲ Minimize</span>
-        </div>
-        <div id="staffContent" style="margin-top: 10px;">
-            <label>Exterior Staff (1 Person):</label>
-            <input type="text" id="extStaffName" placeholder="e.g. Ratheesh">
-
-            <label>Interior Staff 1 (Lead):</label>
-            <input type="text" id="intStaff1" placeholder="e.g. Jelin">
-
-            <label>Interior Staff 2 (Support):</label>
-            <input type="text" id="intStaff2" placeholder="e.g. Aromal">
-
-            <button class="btn btn-success" onclick="saveStaffSetup()">Save & Lock Staff</button>
-        </div>
-    </div>
-
-    <!-- Add Wash Job Card -->
-    <div class="card card-add-job">
-        <div class="card-title" style="margin-bottom: 8px;">🚗 Add New Wash Job</div>
-        
-        <label>Car Name / Model:</label>
-        <input type="text" id="carName" placeholder="e.g. Hyundai Verna">
-
-        <label>Registration Number:</label>
-        <input type="text" id="regNumber" placeholder="e.g. KL 01 AB 1234">
-
-        <label>Vehicle Body Type (Standard TAT):</label>
-        <select id="bodyTypeSelect" onchange="onBodyTypeChange(this)">
-            <option value="Hatchback" data-tat="35">Hatchback (35m)</option>
-            <option value="Sedan" data-tat="35" selected>Sedan (35m)</option>
-            <option value="Mini SUV" data-tat="35">Mini SUV (35m)</option>
-            <option value="MPV" data-tat="40">MPV (40m)</option>
-            <option value="SUV" data-tat="45">SUV (45m)</option>
-            <option value="Bike / Scooter" data-tat="20">Bike / Scooter (20m)</option>
-        </select>
-
-        <label>Dirt Condition (+15 mins if Bad):</label>
-        <div class="pill-group" id="dirtGroup">
-            <div class="pill active" onclick="selectDirt(this, 'OK')">OK</div>
-            <div class="pill" onclick="selectDirt(this, 'Medium')">Medium</div>
-            <div class="pill" onclick="selectDirt(this, 'Bad')">Bad (+15m)</div>
-        </div>
-
-        <label>Base Price Preset (₹):</label>
-        <div class="price-btn-group">
-            <div class="price-preset" onclick="setPrice(this, 200)">200</div>
-            <div class="price-preset" onclick="setPrice(this, 250)">250</div>
-            <div class="price-preset" onclick="setPrice(this, 550)">550</div>
-            <div class="price-preset" onclick="setPrice(this, 600)">600</div>
-            <div class="price-preset active" onclick="setPrice(this, 650)">650</div>
-            <div class="price-preset" onclick="setPrice(this, 700)">700</div>
-            <div class="price-preset" onclick="setPrice(this, 1800)">1800</div>
-        </div>
-        <input type="number" id="priceInput" placeholder="Price" value="650">
-
-        <label>Additional Work / Add-on Description:</label>
-        <input type="text" id="addOnDesc" placeholder="e.g. Underbody coating">
-
-        <label>Additional Work Price (₹):</label>
-        <input type="number" id="addOnPrice" placeholder="0" value="0">
-
-        <button class="btn btn-success" style="margin-top: 2px; padding: 12px; font-size: 14px;" onclick="startWashJob()">🚀 Start Wash Job</button>
-    </div>
-
-    <!-- Active Jobs Section -->
-    <div class="card" id="activeJobsCard" style="display:none;">
-        <div class="card-title" style="margin-bottom: 8px;">⏳ Active Washes In Progress</div>
-        <div id="activeJobsList"></div>
-    </div>
-
-    <!-- Mobile Screen Compact Zero-Scroll QC Modal -->
-    <div id="qcModal" class="modal">
-        <div class="modal-content">
-            <div>
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                    <div class="card-title" style="font-size: 15px;">🔍 Quality Control (QC)</div>
-                    <button class="btn btn-secondary" style="width: auto; padding: 4px 8px; font-size: 11px;" onclick="closeQcModal()">✕ Cancel</button>
-                </div>
-                
-                <div id="qcJobDetails" style="font-size: 11.5px; font-weight: 700; margin-bottom: 6px; color: var(--text-muted); background: #f1f5f9; padding: 6px 8px; border-radius: 6px;"></div>
-
-                <div id="qcAddOnBox" style="display:none; font-size: 11px; font-weight: 700; margin-bottom: 6px; color: #b45309; background: #fef3c7; padding: 6px 8px; border-radius: 6px;">
-                    ⚠️ <strong>Add-on:</strong> <span id="qcAddOnText"></span>
-                </div>
-
-                <!-- Interior Checklist Grid -->
-                <div id="interiorQcSection">
-                    <div style="color: var(--primary); font-size: 12px; font-weight: 800; margin-bottom: 4px;">Interior Checks:</div>
-                    <div class="qc-grid">
-                        <label class="checkbox-label"><input type="checkbox" id="qcIntVacuum"> Vacuuming & Mats</label>
-                        <label class="checkbox-label"><input type="checkbox" id="qcAcVent"> AC Vents</label>
-                        <label class="checkbox-label"><input type="checkbox" id="qcBrakePedal"> Brake Pedals</label>
-                        <label class="checkbox-label"><input type="checkbox" id="qcDash"> Dash Polish</label>
-                    </div>
-                </div>
-
-                <!-- Exterior Checklist Grid -->
-                <div style="color: var(--primary); font-size: 12px; font-weight: 800; margin-top: 4px; margin-bottom: 4px;">Exterior Checks:</div>
-                <div class="qc-grid">
-                    <label class="checkbox-label"><input type="checkbox" id="qcFoam"> Foam & Rinse</label>
-                    <label class="checkbox-label"><input type="checkbox" id="qcGlass"> Glass Polish</label>
-                    <label class="checkbox-label"><input type="checkbox" id="qcTire"> Tire Polish</label>
-                </div>
-
-                <!-- Ratings Section Side-by-Side -->
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 4px;">
-                    <div>
-                        <label style="font-size: 11px; margin-bottom: 2px;">Cleaning Rating:</label>
-                        <select id="cleaningRating" style="padding: 6px 8px; font-size: 12px; margin-bottom: 0;">
-                            <option value="5★">⭐⭐⭐⭐⭐ (5)</option>
-                            <option value="4★">⭐⭐⭐⭐ (4)</option>
-                            <option value="3★">⭐⭐⭐ (3)</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label style="font-size: 11px; margin-bottom: 2px;">Staff Rating:</label>
-                        <select id="staffRating" style="padding: 6px 8px; font-size: 12px; margin-bottom: 0;">
-                            <option value="5★">⭐⭐⭐⭐⭐ (5)</option>
-                            <option value="4★">⭐⭐⭐⭐ (4)</option>
-                            <option value="3★">⭐⭐⭐ (3)</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-
-            <button class="btn btn-success" id="qcSubmitBtn" style="margin-top: 10px; padding: 12px; font-size: 14px;" onclick="completeQcCheck()">✅ Complete QC & Save Job</button>
-        </div>
-    </div>
-
-    <!-- Output Section -->
-    <div class="card card-report">
-        <div class="card-title" style="margin-bottom: 4px;">📋 WhatsApp Report Output</div>
-        <div class="subtitle" style="margin-bottom: 8px;">Formatted status report:</div>
-        
-        <div class="output-box" id="whatsappOutputBox">No completed jobs yet today.</div>
-        
-        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-            <button class="btn btn-secondary" style="flex: 1;" onclick="copyReportText()">📋 Copy</button>
-            <button class="btn btn-success" style="flex: 1;" onclick="shareToWhatsApp()">💬 WhatsApp</button>
-        </div>
-    </div>
-
-    <!-- Dynamic Hidden Frame and Form Container -->
-    <div id="submission_container" style="display:none;"></div>
-
-    <script>
-        let selectedBody = 'Sedan';
-        let baseTat = 35;
-        let selectedDirt = 'OK';
-        let currentJobId = null;
-        let isSubmitting = false;
-        
-        let appState = {
-            staff: { ext: '', int1: '', int2: '' },
-            activeJobs: [],
-            completedJobs: []
-        };
-
-        window.onload = function() {
-            const todayStr = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
-            const savedDate = localStorage.getItem('classy_garage_date_2026');
-            
-            const saved = localStorage.getItem('classy_garage_state_2026');
-            if (saved) {
-                try {
-                    appState = JSON.parse(saved);
-                    if (savedDate !== todayStr) {
-                        appState.completedJobs = [];
-                        localStorage.setItem('classy_garage_date_2026', todayStr);
-                        saveState();
-                    }
-
-                    if (appState.staff.ext) {
-                        document.getElementById('extStaffName').value = appState.staff.ext;
-                        document.getElementById('intStaff1').value = appState.staff.int1;
-                        document.getElementById('intStaff2').value = appState.staff.int2;
-                        toggleStaffCard();
-                    }
-                } catch(e) { console.error(e); }
-            } else {
-                localStorage.setItem('classy_garage_date_2026', todayStr);
-            }
-
-            const savedUrl = localStorage.getItem('classy_sheet_webhook') || "https://script.google.com/macros/s/AKfycbzEyWMK4qMdQOYzjuEfmwmJOSSrn782JsJqITNGzRnwjbRiO282M4IHK9Rp-gUWvxFd/exec";
-            if (savedUrl) {
-                document.getElementById('sheetWebhookUrl').value = savedUrl;
-            }
-
-            renderActiveJobs();
-            renderOutput();
-            setInterval(updateTimers, 1000);
-        };
-
-        function saveState() {
-            localStorage.setItem('classy_garage_state_2026', JSON.stringify(appState));
-        }
-
-        function toggleSettings() {
-            const panel = document.getElementById('settingsPanel');
-            panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
-        }
-
-        function saveSettings() {
-            const url = document.getElementById('sheetWebhookUrl').value.trim();
-            localStorage.setItem('classy_sheet_webhook', url);
-            alert("Webhook URL saved!");
-            toggleSettings();
-        }
-
-        function clearTodayData() {
-            if (confirm("Clear all active and completed records for today?")) {
-                appState.activeJobs = [];
-                appState.completedJobs = [];
-                saveState();
-                renderActiveJobs();
-                renderOutput();
-                alert("Data cleared!");
-                toggleSettings();
-            }
-        }
-
-        function toggleStaffCard() {
-            const content = document.getElementById('staffContent');
-            const icon = document.getElementById('staffToggleIcon');
-            if (content.style.display === 'none') {
-                content.style.display = 'block';
-                icon.innerText = '▲ Minimize';
-            } else {
-                content.style.display = 'none';
-                icon.innerText = '▼ Expand';
-            }
-        }
-
-        function saveStaffSetup() {
-            appState.staff = {
-                ext: document.getElementById('extStaffName').value.trim() || 'Unassigned',
-                int1: document.getElementById('intStaff1').value.trim() || 'Staff 1',
-                int2: document.getElementById('intStaff2').value.trim() || 'Staff 2'
-            };
-            saveState();
-            alert("Staff setup locked!");
-            toggleStaffCard();
-        }
-
-        function onBodyTypeChange(selectEl) {
-            const selectedOpt = selectEl.options[selectEl.selectedIndex];
-            selectedBody = selectedOpt.value;
-            baseTat = parseInt(selectedOpt.getAttribute('data-tat')) || 35;
-        }
-
-        function selectDirt(el, dirt) {
-            selectedDirt = dirt;
-            document.querySelectorAll('#dirtGroup .pill').forEach(p => p.classList.remove('active'));
-            if (el) el.classList.add('active');
-        }
-
-        function setPrice(el, amount) {
-            document.getElementById('priceInput').value = amount;
-            document.querySelectorAll('.price-preset').forEach(p => p.classList.remove('active'));
-            if (el) el.classList.add('active');
-        }
-
-        function startWashJob() {
-            const carName = document.getElementById('carName').value.trim();
-            const regNumber = document.getElementById('regNumber').value.trim();
-            const price = parseFloat(document.getElementById('priceInput').value) || 650;
-            const addOnDesc = document.getElementById('addOnDesc').value.trim();
-            const addOnPrice = parseFloat(document.getElementById('addOnPrice').value) || 0;
-
-            if (!carName || !regNumber) {
-                alert("Enter Vehicle Name and Registration Number.");
-                return;
-            }
-
-            let totalTat = baseTat;
-            if (selectedDirt === 'Bad') totalTat += 15;
-
-            const newJob = {
-                id: Date.now(),
-                carName,
-                regNumber,
-                bodyType: selectedBody,
-                dirtCondition: selectedDirt,
-                tatMinutes: totalTat,
-                startTime: Date.now(),
-                startTimeStr: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-                price,
-                addOnDesc,
-                addOnPrice
-            };
-
-            appState.activeJobs.push(newJob);
-            saveState();
-
-            document.getElementById('carName').value = '';
-            document.getElementById('regNumber').value = '';
-            document.getElementById('addOnDesc').value = '';
-            document.getElementById('addOnPrice').value = '0';
-
-            renderActiveJobs();
-            if(document.getElementById('staffContent').style.display !== 'none') {
-                toggleStaffCard();
-            }
-        }
-
-        function renderActiveJobs() {
-            const container = document.getElementById('activeJobsList');
-            const cardWrapper = document.getElementById('activeJobsCard');
-
-            if (appState.activeJobs.length === 0) {
-                cardWrapper.style.display = 'none';
-                return;
-            }
-
-            cardWrapper.style.display = 'block';
-            container.innerHTML = '';
-
-            appState.activeJobs.forEach(job => {
-                const el = document.createElement('div');
-                el.className = 'job-card';
-                el.innerHTML = `
-                    <div style="display:flex; justify-content:space-between; font-weight:700; font-size:13.5px;">
-                        <span>${job.carName} (${job.regNumber})</span>
-                        <span style="font-size:11.5px; color:var(--text-muted);">${job.bodyType}</span>
-                    </div>
-                    <div style="font-size: 11.5px; color: var(--text-muted); margin-top: 2px;">
-                        Target TAT: ${job.tatMinutes}m | Started: ${job.startTimeStr}
-                    </div>
-                    <div class="timer-display" id="timer-${job.id}">00:00</div>
-                    <button class="btn btn-danger" onclick="openQcModal(${job.id})">🏁 Finish & QC</button>
-                `;
-                container.appendChild(el);
-            });
-            updateTimers();
-        }
-
-        function updateTimers() {
-            const now = Date.now();
-            appState.activeJobs.forEach(job => {
-                const timerEl = document.getElementById(`timer-${job.id}`);
-                if (!timerEl) return;
-
-                const elapsedSec = Math.floor((now - job.startTime) / 1000);
-                const mins = Math.floor(elapsedSec / 60);
-                const secs = elapsedSec % 60;
-                const timeStr = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-                
-                timerEl.innerText = timeStr;
-
-                const elapsedMins = elapsedSec / 60;
-                const targetMins = job.tatMinutes;
-
-                if (elapsedMins > targetMins) {
-                    timerEl.className = 'timer-display timer-overdue';
-                } else if (elapsedMins >= targetMins * 0.8) {
-                    timerEl.className = 'timer-display timer-warning';
-                } else {
-                    timerEl.className = 'timer-display timer-normal';
-                }
-            });
-        }
-
-        function openQcModal(jobId) {
-            currentJobId = jobId;
-            const job = appState.activeJobs.find(j => j.id === jobId);
-            if (!job) return;
-
-            document.getElementById('qcJobDetails').innerText = `${job.carName} (${job.regNumber}) | ${job.bodyType}`;
-            
-            const addOnBox = document.getElementById('qcAddOnBox');
-            if (job.addOnDesc && job.addOnPrice > 0) {
-                document.getElementById('qcAddOnText').innerText = `${job.addOnDesc} (+₹${job.addOnPrice})`;
-                addOnBox.style.display = 'block';
-            } else {
-                addOnBox.style.display = 'none';
-            }
-
-            const interiorSec = document.getElementById('interiorQcSection');
-            if (job.bodyType.includes('Bike')) {
-                interiorSec.style.display = 'none';
-            } else {
-                interiorSec.style.display = 'block';
-            }
-
-            document.querySelectorAll('#qcModal input[type="checkbox"]').forEach(cb => cb.checked = false);
-            document.getElementById('qcModal').style.display = 'flex';
-        }
-
-        function closeQcModal() {
-            document.getElementById('qcModal').style.display = 'none';
-        }
-
-        function completeQcCheck() {
-            if (isSubmitting) return;
-            isSubmitting = true;
-
-            const btn = document.getElementById('qcSubmitBtn');
-            btn.innerText = "⏳ Syncing to Sheet...";
-            btn.disabled = true;
-
-            const jobIndex = appState.activeJobs.findIndex(j => j.id === currentJobId);
-            if (jobIndex === -1) {
-                isSubmitting = false;
-                btn.disabled = false;
-                btn.innerText = "✅ Complete QC & Save Job";
-                return;
-            }
-
-            const job = appState.activeJobs[jobIndex];
-            const endTimeStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-            
-            const cleaningRating = document.getElementById('cleaningRating').value;
-            const staffRating = document.getElementById('staffRating').value;
-
-            const extStaff = appState.staff.ext || 'Exterior Team';
-            const intStaffs = [appState.staff.int1, appState.staff.int2].filter(Boolean).join(' & ') || 'Interior Team';
-            const staffTypeText = job.bodyType.includes('Bike') ? `Exterior: ${extStaff}` : `Exterior: ${extStaff} | Interior: ${intStaffs}`;
-
-            let addOnText = '';
-            let finalPrice = job.price;
-            if (job.addOnDesc && job.addOnPrice > 0) {
-                addOnText = `${job.addOnDesc} (+₹${job.addOnPrice})`;
-                finalPrice += job.addOnPrice;
-            }
-
-            const completedRecord = {
-                date: new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }),
-                carName: job.carName,
-                regNumber: job.regNumber,
-                bodyType: job.bodyType,
-                dirtCondition: job.dirtCondition,
-                startTime: job.startTimeStr,
-                endTime: endTimeStr,
-                cleaningRating,
-                staffRating,
-                staffTypeNames: staffTypeText,
-                price: finalPrice,
-                addOns: addOnText
-            };
-
-            appState.activeJobs.splice(jobIndex, 1);
-            appState.completedJobs.push(completedRecord);
-            saveState();
-
-            syncToGoogleSheet(completedRecord);
-
-            setTimeout(() => {
-                btn.innerText = "✅ Complete QC & Save Job";
-                btn.disabled = false;
-                isSubmitting = false;
-                closeQcModal();
-                renderActiveJobs();
-                renderOutput();
-            }, 800);
-        }
-
-        /* Resilient Dual Sync Engine (Dynamic Form + Query Fallback) */
-        function syncToGoogleSheet(record) {
-            const webhookUrl = localStorage.getItem('classy_sheet_webhook');
-            if (!webhookUrl) return;
-
-            try {
-                const container = document.getElementById('submission_container');
-                container.innerHTML = '';
-
-                const frameName = 'sync_frame_' + Date.now();
-                const iframe = document.createElement('iframe');
-                iframe.name = frameName;
-                container.appendChild(iframe);
-
-                const form = document.createElement('form');
-                form.method = 'POST';
-                form.action = webhookUrl;
-                form.target = frameName;
-
-                for (const key in record) {
-                    if (record.hasOwnProperty(key)) {
-                        const input = document.createElement('input');
-                        input.type = 'hidden';
-                        input.name = key;
-                        input.value = record[key];
-                        form.appendChild(input);
-                    }
-                }
-
-                container.appendChild(form);
-                form.submit();
-            } catch (e) {
-                console.error("Form submit error, invoking fallback GET", e);
-            }
-
-            try {
-                const queryParams = new URLSearchParams(record).toString();
-                const getUrl = webhookUrl + (webhookUrl.includes('?') ? '&' : '?') + queryParams;
-                fetch(getUrl, { mode: 'no-cors', keepalive: true }).catch(() => {});
-            } catch (e) {}
-        }
-
-        function renderOutput() {
-            const box = document.getElementById('whatsappOutputBox');
-            if (appState.completedJobs.length === 0) {
-                box.innerText = "No completed jobs yet today.";
-                return;
-            }
-
-            let report = `🚗 *CLASSY GARAGE REPORT* 🚗\n`;
-            report += `📅 Date: ${appState.completedJobs[0].date}\n----------------------------------------\n\n`;
-
-            appState.completedJobs.forEach((job, index) => {
-                report += `${index + 1}. *${job.carName}* (${job.regNumber})\n`;
-                report += `⏱️ ${job.startTime} - ${job.endTime}\n`;
-                report += `🚙 ${job.bodyType} | Dirt: ${job.dirtCondition}\n`;
-                report += `👥 ${job.staffTypeNames}\n`;
-                report += `⭐ Clean: ${job.cleaningRating} | Staff: ${job.staffRating}\n`;
-                report += `💵 ₹${job.price}${job.addOns ? ` | Add-on: ${job.addOns}` : ''}\n\n`;
-            });
-
-            box.innerText = report.trim();
-        }
-
-        function copyReportText() {
-            const box = document.getElementById('whatsappOutputBox');
-            navigator.clipboard.writeText(box.innerText).then(() => {
-                alert("Copied to clipboard!");
-            });
-        }
-
-        function shareToWhatsApp() {
-            const box = document.getElementById('whatsappOutputBox');
-            const encoded = encodeURIComponent(box.innerText);
-            window.open(`https://api.whatsapp.com/send?text=${encoded}`, '_blank');
-        }
-    </script>
+    <header><div><h1>Classy Garage</h1><div class="subtitle">Tracking Engine - SINGLE SYNC FIX</div></div><button class="btn btn-secondary" style="width:auto;padding:5px 10px;font-size:11.5px;" onclick="toggleSettings()">⚙️ Settings</button></header>
+    <div id="settingsPanel" class="card" style="display:none;"><div class="card-title">Google Sheets Webhook Setup</div><label>Apps Script URL:</label><input type="text" id="sheetWebhookUrl"><button class="btn btn-success" style="margin-bottom:10px;" onclick="saveSettings()">Save Webhook URL</button><div style="border-top:1px solid #cbd5e1;padding-top:10px;"><button class="btn btn-danger" onclick="clearTodayData()">🗑️ Clear Today's Records</button></div></div>
+    <div class="card" id="staffCard"><div class="card-header" onclick="toggleStaffCard()"><div class="card-title">👥 Today's Staff Setup</div><span id="staffToggleIcon">▲ Minimize</span></div><div id="staffContent" style="margin-top:10px;"><label>Exterior Staff:</label><input type="text" id="extStaffName"><label>Interior Staff 1:</label><input type="text" id="intStaff1"><label>Interior Staff 2:</label><input type="text" id="intStaff2"><button class="btn btn-success" onclick="saveStaffSetup()">Save & Lock Staff</button></div></div>
+    <div class="card card-add-job"><div class="card-title">🚗 Add New Wash Job</div><label>Car Name:</label><input type="text" id="carName"><label>Reg Number:</label><input type="text" id="regNumber"><label>Body Type:</label><select id="bodyTypeSelect" onchange="onBodyTypeChange(this)"><option value="Hatchback" data-tat="35">Hatchback (35m)</option><option value="Sedan" data-tat="35" selected>Sedan (35m)</option><option value="Mini SUV" data-tat="35">Mini SUV (35m)</option><option value="MPV" data-tat="40">MPV (40m)</option><option value="SUV" data-tat="45">SUV (45m)</option><option value="Bike / Scooter" data-tat="20">Bike / Scooter (20m)</option></select><label>Dirt Condition:</label><div class="pill-group" id="dirtGroup"><div class="pill active" onclick="selectDirt(this,'OK')">OK</div><div class="pill" onclick="selectDirt(this,'Medium')">Medium</div><div class="pill" onclick="selectDirt(this,'Bad')">Bad (+15m)</div></div><label>Price Preset:</label><div class="price-btn-group"><div class="price-preset" onclick="setPrice(this,200)">200</div><div class="price-preset" onclick="setPrice(this,250)">250</div><div class="price-preset" onclick="setPrice(this,550)">550</div><div class="price-preset" onclick="setPrice(this,600)">600</div><div class="price-preset active" onclick="setPrice(this,650)">650</div><div class="price-preset" onclick="setPrice(this,700)">700</div><div class="price-preset" onclick="setPrice(this,1800)">1800</div></div><input type="number" id="priceInput" value="650"><label>Add-on Desc:</label><input type="text" id="addOnDesc"><label>Add-on Price:</label><input type="number" id="addOnPrice" value="0"><button class="btn btn-success" style="padding:12px;font-size:14px;" onclick="startWashJob()">🚀 Start Wash Job</button></div>
+    <div class="card" id="activeJobsCard" style="display:none;"><div class="card-title">⏳ Active Washes</div><div id="activeJobsList"></div></div>
+    <div id="qcModal" class="modal"><div class="modal-content"><div><div style="display:flex;justify-content:space-between;margin-bottom:6px;"><div class="card-title">🔍 QC</div><button class="btn btn-secondary" style="width:auto;padding:4px 8px;" onclick="closeQcModal()">✕</button></div><div id="qcJobDetails" style="font-size:11.5px;font-weight:700;background:#f1f5f9;padding:6px 8px;border-radius:6px;margin-bottom:6px;"></div><div id="qcAddOnBox" style="display:none;font-size:11px;font-weight:700;background:#fef3c7;padding:6px 8px;border-radius:6px;margin-bottom:6px;">⚠️ <span id="qcAddOnText"></span></div><div id="interiorQcSection"><div style="color:var(--primary);font-size:12px;font-weight:800;margin-bottom:4px;">Interior:</div><div class="qc-grid"><label class="checkbox-label"><input type="checkbox" id="qcIntVacuum"> Vacuuming</label><label class="checkbox-label"><input type="checkbox" id="qcAcVent"> AC Vents</label><label class="checkbox-label"><input type="checkbox" id="qcBrakePedal"> Brake Pedals</label><label class="checkbox-label"><input type="checkbox" id="qcDash"> Dash Polish</label></div></div><div style="color:var(--primary);font-size:12px;font-weight:800;margin:4px 0;">Exterior:</div><div class="qc-grid"><label class="checkbox-label"><input type="checkbox" id="qcFoam"> Foam & Rinse</label><label class="checkbox-label"><input type="checkbox" id="qcGlass"> Glass Polish</label><label class="checkbox-label"><input type="checkbox" id="qcTire"> Tire Polish</label></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:4px;"><div><label>Cleaning Rating:</label><select id="cleaningRating"><option value="5★">⭐⭐⭐⭐⭐</option><option value="4★">⭐⭐⭐⭐</option><option value="3★">⭐⭐⭐</option></select></div><div><label>Staff Rating:</label><select id="staffRating"><option value="5★">⭐⭐⭐⭐⭐</option><option value="4★">⭐⭐⭐⭐</option><option value="3★">⭐⭐⭐</option></select></div></div></div><button class="btn btn-success" id="qcSubmitBtn" style="margin-top:10px;padding:12px;" onclick="completeQcCheck()">✅ Complete QC & Save Job</button></div></div>
+    <div class="card card-report"><div class="card-title">📋 WhatsApp Report</div><div class="output-box" id="whatsappOutputBox">No completed jobs yet today.</div><div style="display:flex;gap:8px;"><button class="btn btn-secondary" style="flex:1;" onclick="copyReportText()">📋 Copy</button><button class="btn btn-success" style="flex:1;" onclick="shareToWhatsApp()">💬 WhatsApp</button></div></div>
+
+<script>
+let selectedBody='Sedan',baseTat=35,selectedDirt='OK',currentJobId=null,isSubmitting=false;
+let appState={staff:{ext:'',int1:'',int2:''},activeJobs:[],completedJobs:[]};
+window.onload=function(){
+ const todayStr=new Date().toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
+ const savedDate=localStorage.getItem('classy_garage_date_2026');
+ const saved=localStorage.getItem('classy_garage_state_2026');
+ if(saved){try{appState=JSON.parse(saved);if(savedDate!==todayStr){appState.completedJobs=[];localStorage.setItem('classy_garage_date_2026',todayStr);saveState();}if(appState.staff.ext){document.getElementById('extStaffName').value=appState.staff.ext;document.getElementById('intStaff1').value=appState.staff.int1;document.getElementById('intStaff2').value=appState.staff.int2;toggleStaffCard();}}catch(e){}}
+ else{localStorage.setItem('classy_garage_date_2026',todayStr);}
+ const savedUrl=localStorage.getItem('classy_sheet_webhook')||"https://script.google.com/macros/s/AKfycbzEyWMK4qMdQOYzjuEfmwmJOSSrn782JsJqITNGzRnwjbRiO282M4IHK9Rp-gUWvxFd/exec";
+ if(savedUrl){document.getElementById('sheetWebhookUrl').value=savedUrl;}
+ renderActiveJobs();renderOutput();setInterval(updateTimers,1000);
+};
+function saveState(){localStorage.setItem('classy_garage_state_2026',JSON.stringify(appState));}
+function toggleSettings(){const p=document.getElementById('settingsPanel');p.style.display=p.style.display==='none'?'block':'none';}
+function saveSettings(){const url=document.getElementById('sheetWebhookUrl').value.trim();localStorage.setItem('classy_sheet_webhook',url);alert("Saved!");toggleSettings();}
+function clearTodayData(){if(confirm("Clear all?")){appState.activeJobs=[];appState.completedJobs=[];saveState();renderActiveJobs();renderOutput();}}
+function toggleStaffCard(){const c=document.getElementById('staffContent');const i=document.getElementById('staffToggleIcon');if(c.style.display==='none'){c.style.display='block';i.innerText='▲ Minimize';}else{c.style.display='none';i.innerText='▼ Expand';}}
+function saveStaffSetup(){appState.staff={ext:document.getElementById('extStaffName').value.trim()||'Unassigned',int1:document.getElementById('intStaff1').value.trim()||'Staff 1',int2:document.getElementById('intStaff2').value.trim()||'Staff 2'};saveState();alert("Staff locked!");toggleStaffCard();}
+function onBodyTypeChange(s){const o=s.options[s.selectedIndex];selectedBody=o.value;baseTat=parseInt(o.getAttribute('data-tat'))||35;}
+function selectDirt(el,dirt){selectedDirt=dirt;document.querySelectorAll('#dirtGroup .pill').forEach(p=>p.classList.remove('active'));if(el)el.classList.add('active');}
+function setPrice(el,a){document.getElementById('priceInput').value=a;document.querySelectorAll('.price-preset').forEach(p=>p.classList.remove('active'));if(el)el.classList.add('active');}
+function startWashJob(){
+ const carName=document.getElementById('carName').value.trim(),regNumber=document.getElementById('regNumber').value.trim();
+ const price=parseFloat(document.getElementById('priceInput').value)||650,addOnDesc=document.getElementById('addOnDesc').value.trim(),addOnPrice=parseFloat(document.getElementById('addOnPrice').value)||0;
+ if(!carName||!regNumber){alert("Enter Name & Reg No");return;}
+ let totalTat=baseTat;if(selectedDirt==='Bad')totalTat+=15;
+ const newJob={id:Date.now(),carName,regNumber,bodyType:selectedBody,dirtCondition:selectedDirt,tatMinutes:totalTat,startTime:Date.now(),startTimeStr:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),price,addOnDesc,addOnPrice};
+ appState.activeJobs.push(newJob);saveState();
+ document.getElementById('carName').value='';document.getElementById('regNumber').value='';document.getElementById('addOnDesc').value='';document.getElementById('addOnPrice').value='0';
+ renderActiveJobs();
+}
+function renderActiveJobs(){
+ const container=document.getElementById('activeJobsList'),cardWrapper=document.getElementById('activeJobsCard');
+ if(appState.activeJobs.length===0){cardWrapper.style.display='none';return;}
+ cardWrapper.style.display='block';container.innerHTML='';
+ appState.activeJobs.forEach(job=>{
+  const el=document.createElement('div');el.className='job-card';
+  el.innerHTML=`<div style="display:flex;justify-content:space-between;font-weight:700;"><span>${job.carName} (${job.regNumber})</span><span style="font-size:11.5px;">${job.bodyType}</span></div><div style="font-size:11.5px;color:#475569;">Target: ${job.tatMinutes}m | Started: ${job.startTimeStr}</div><div class="timer-display" id="timer-${job.id}">00:00</div><button class="btn btn-danger" onclick="openQcModal(${job.id})">🏁 Finish & QC</button>`;
+  container.appendChild(el);
+ });updateTimers();
+}
+function updateTimers(){
+ const now=Date.now();
+ appState.activeJobs.forEach(job=>{
+  const el=document.getElementById(`timer-${job.id}`);if(!el)return;
+  const sec=Math.floor((now-job.startTime)/1000),m=Math.floor(sec/60),s=sec%60;
+  el.innerText=`${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+  const elapsedM=sec/60;if(elapsedM>job.tatMinutes){el.className='timer-display timer-overdue';}else if(elapsedM>=job.tatMinutes*0.8){el.className='timer-display timer-warning';}else{el.className='timer-display timer-normal';}
+ });
+}
+function openQcModal(jobId){
+ currentJobId=jobId;const job=appState.activeJobs.find(j=>j.id===jobId);if(!job)return;
+ document.getElementById('qcJobDetails').innerText=`${job.carName} (${job.regNumber}) | ${job.bodyType}`;
+ const addOnBox=document.getElementById('qcAddOnBox');
+ if(job.addOnDesc&&job.addOnPrice>0){document.getElementById('qcAddOnText').innerText=`${job.addOnDesc} (+₹${job.addOnPrice})`;addOnBox.style.display='block';}else{addOnBox.style.display='none';}
+ document.getElementById('interiorQcSection').style.display=job.bodyType.includes('Bike')?'none':'block';
+ document.querySelectorAll('#qcModal input[type="checkbox"]').forEach(cb=>cb.checked=false);
+ document.getElementById('qcModal').style.display='flex';
+}
+function closeQcModal(){document.getElementById('qcModal').style.display='none';}
+
+// FIXED - SINGLE SUBMIT
+function completeQcCheck(){
+ if(isSubmitting)return;
+ isSubmitting=true;
+ const btn=document.getElementById('qcSubmitBtn');btn.innerText="⏳ Syncing...";btn.disabled=true;
+ const jobIndex=appState.activeJobs.findIndex(j=>j.id===currentJobId);
+ if(jobIndex===-1){isSubmitting=false;btn.disabled=false;btn.innerText="✅ Complete QC & Save Job";return;}
+ const job=appState.activeJobs[jobIndex];
+ const endTimeStr=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+ const cleaningRating=document.getElementById('cleaningRating').value,staffRating=document.getElementById('staffRating').value;
+ const extStaff=appState.staff.ext||'Exterior Team',intStaffs=[appState.staff.int1,appState.staff.int2].filter(Boolean).join(' & ')||'Interior Team';
+ const staffTypeText=job.bodyType.includes('Bike')?`Exterior: ${extStaff}`:`Exterior: ${extStaff} | Interior: ${intStaffs}`;
+ let addOnText='',finalPrice=job.price;
+ if(job.addOnDesc&&job.addOnPrice>0){addOnText=`${job.addOnDesc} (+₹${job.addOnPrice})`;finalPrice+=job.addOnPrice;}
+ const completedRecord={
+  uniqueKey:`${job.regNumber}_${job.startTimeStr}_${Date.now()}`.replace(/\s/g,''),
+  date:new Date().toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'}),
+  carName:job.carName,regNumber:job.regNumber,bodyType:job.bodyType,dirtCondition:job.dirtCondition,
+  startTime:job.startTimeStr,endTime:endTimeStr,cleaningRating,staffRating,staffTypeNames:staffTypeText,price:finalPrice,addOns:addOnText
+ };
+ appState.activeJobs.splice(jobIndex,1);appState.completedJobs.push(completedRecord);saveState();
+ syncToGoogleSheet(completedRecord);
+ setTimeout(()=>{btn.innerText="✅ Complete QC & Save Job";btn.disabled=false;isSubmitting=false;closeQcModal();renderActiveJobs();renderOutput();},800);
+}
+
+// SINGLE FETCH ONLY - NO DOUBLE
+function syncToGoogleSheet(record){
+ const webhookUrl=localStorage.getItem('classy_sheet_webhook');if(!webhookUrl)return;
+ const fd=new FormData();for(const k in record){fd.append(k,record[k]);}
+ fetch(webhookUrl,{method:'POST',body:fd,mode:'no-cors'}).then(()=>console.log("SINGLE SYNC OK")).catch(e=>console.log(e));
+}
+function renderOutput(){
+ const box=document.getElementById('whatsappOutputBox');
+ if(appState.completedJobs.length===0){box.innerText="No completed jobs yet today.";return;}
+ let report=`🚗 *CLASSY GARAGE REPORT* 🚗\n📅 Date: ${appState.completedJobs[0].date}\n----------------------------------------\n\n`;
+ appState.completedJobs.forEach((job,i)=>{report+=`${i+1}. *${job.carName}* (${job.regNumber})\n⏱️ ${job.startTime} - ${job.endTime}\n🚙 ${job.bodyType} | Dirt: ${job.dirtCondition}\n👥 ${job.staffTypeNames}\n⭐ Clean: ${job.cleaningRating} | Staff: ${job.staffRating}\n💵 ₹${job.price}${job.addOns?` | Add-on: ${job.addOns}`:''}\n\n`;});
+ box.innerText=report.trim();
+}
+function copyReportText(){navigator.clipboard.writeText(document.getElementById('whatsappOutputBox').innerText).then(()=>alert("Copied!"));}
+function shareToWhatsApp(){const t=encodeURIComponent(document.getElementById('whatsappOutputBox').innerText);window.open(`https://api.whatsapp.com/send?text=${t}`,'_blank');}
+</script>
 </body>
 </html>

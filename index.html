@@ -237,7 +237,6 @@
         .timer-warning { color: var(--warning); }
         .timer-overdue { color: var(--danger); }
 
-        /* Mobile Zero-Scroll QC Modal Layout */
         .modal {
             display: none;
             position: fixed;
@@ -486,11 +485,15 @@
         </div>
     </div>
 
+    <!-- Dynamic Hidden Frame and Form Container -->
+    <div id="submission_container" style="display:none;"></div>
+
     <script>
         let selectedBody = 'Sedan';
         let baseTat = 35;
         let selectedDirt = 'OK';
         let currentJobId = null;
+        let isSubmitting = false;
         
         let appState = {
             staff: { ext: '', int1: '', int2: '' },
@@ -733,12 +736,20 @@
         }
 
         function completeQcCheck() {
+            if (isSubmitting) return;
+            isSubmitting = true;
+
             const btn = document.getElementById('qcSubmitBtn');
             btn.innerText = "⏳ Syncing to Sheet...";
             btn.disabled = true;
 
             const jobIndex = appState.activeJobs.findIndex(j => j.id === currentJobId);
-            if (jobIndex === -1) return;
+            if (jobIndex === -1) {
+                isSubmitting = false;
+                btn.disabled = false;
+                btn.innerText = "✅ Complete QC & Save Job";
+                return;
+            }
 
             const job = appState.activeJobs[jobIndex];
             const endTimeStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
@@ -776,34 +787,60 @@
             appState.completedJobs.push(completedRecord);
             saveState();
 
-            // Fire mobile sync
             syncToGoogleSheet(completedRecord);
 
             setTimeout(() => {
                 btn.innerText = "✅ Complete QC & Save Job";
                 btn.disabled = false;
+                isSubmitting = false;
                 closeQcModal();
                 renderActiveJobs();
                 renderOutput();
-            }, 500);
+            }, 800);
         }
 
-        /* 100% Mobile Safari & Chrome Safe Beacon Sync */
+        /* Resilient Dual Sync Engine (Dynamic Form + Query Fallback) */
         function syncToGoogleSheet(record) {
             const webhookUrl = localStorage.getItem('classy_sheet_webhook');
             if (!webhookUrl) return;
 
-            const params = new URLSearchParams(record).toString();
-            const fullUrl = webhookUrl + (webhookUrl.includes('?') ? '&' : '?') + params;
-
-            // Method 1: Image Ping (Unblockable on iOS/Android)
-            const img = new Image();
-            img.src = fullUrl;
-
-            // Method 2: Fetch Keepalive Backup
             try {
-                fetch(fullUrl, { mode: 'no-cors', keepalive: true }).catch(() => {});
-            } catch(e) {}
+                // Method 1: Dynamic Hidden Form & Iframe Injection
+                const container = document.getElementById('submission_container');
+                container.innerHTML = '';
+
+                const frameName = 'sync_frame_' + Date.now();
+                const iframe = document.createElement('iframe');
+                iframe.name = frameName;
+                container.appendChild(iframe);
+
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = webhookUrl;
+                form.target = frameName;
+
+                for (const key in record) {
+                    if (record.hasOwnProperty(key)) {
+                        const input = document.createElement('input');
+                        input.type = 'hidden';
+                        input.name = key;
+                        input.value = record[key];
+                        form.appendChild(input);
+                    }
+                }
+
+                container.appendChild(form);
+                form.submit();
+            } catch (e) {
+                console.error("Form submit error, invoking fallback GET", e);
+            }
+
+            // Method 2: GET Beacon Fallback for Mobile Safari / Strict CORS
+            try {
+                const queryParams = new URLSearchParams(record).toString();
+                const getUrl = webhookUrl + (webhookUrl.includes('?') ? '&' : '?') + queryParams;
+                fetch(getUrl, { mode: 'no-cors', keepalive: true }).catch(() => {});
+            } catch (e) {}
         }
 
         function renderOutput() {

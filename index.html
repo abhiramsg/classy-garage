@@ -805,7 +805,6 @@
             if (!webhookUrl) return;
 
             try {
-                // Method 1: Dynamic Hidden Form & Iframe Injection
                 const container = document.getElementById('submission_container');
                 container.innerHTML = '';
 
@@ -835,7 +834,6 @@
                 console.error("Form submit error, invoking fallback GET", e);
             }
 
-            // Method 2: GET Beacon Fallback for Mobile Safari / Strict CORS
             try {
                 const queryParams = new URLSearchParams(record).toString();
                 const getUrl = webhookUrl + (webhookUrl.includes('?') ? '&' : '?') + queryParams;
